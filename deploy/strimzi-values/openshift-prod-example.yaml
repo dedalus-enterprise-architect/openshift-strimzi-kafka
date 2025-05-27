@@ -1,6 +1,14 @@
 # Namespace configuration
 watchAnyNamespace: true
 
+# Image configuration
+# Use specific version tag instead of latest for production stability
+image:
+  registry: quay.io
+  repository: strimzi
+  name: operator
+  tag: 0.46.0  # Specify exact version
+
 # Security context settings
 podSecurityContext:
   fsGroup: null

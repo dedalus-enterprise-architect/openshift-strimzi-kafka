@@ -21,6 +21,9 @@ The official examples are available in the Strimzi GitHub repository. Below is a
 5. **[Kafka with Metrics](https://github.com/strimzi/strimzi-kafka-operator/blob/main/examples/kafka/kafka-metrics.yaml)**  
    Deploys a Kafka cluster with Prometheus metrics enabled. This is useful for monitoring Kafka performance and health.
 
+6. **[Kafka Single Node](https://github.com/strimzi/strimzi-kafka-operator/blob/main/examples/kafka/kafka-single-node.yaml)**  
+   Deploys a minimal single-node Kafka broker. This is ideal for development environments, testing, or scenarios with limited resources where a full multi-broker cluster is unnecessary.
+
 ## Usage
 
 1. Clone the Strimzi repository:
@@ -49,6 +52,10 @@ The official examples are available in the Strimzi GitHub repository. Below is a
    - For metrics:
      ```bash
      oc apply -f kafka-metrics.yaml -n kafka-operator
+     ```
+   - For a single-node cluster:
+     ```bash
+     oc apply -f kafka-single-node.yaml -n kafka-operator
      ```
 
 3. Verify the deployment:
