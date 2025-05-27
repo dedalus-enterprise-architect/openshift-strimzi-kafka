@@ -23,7 +23,7 @@ while [[ $# -gt 0 ]]; do
       exit 1
       ;;
   esac
-done
+  done
 
 echo "Uninstalling Strimzi Kafka Operator from namespace: $NAMESPACE"
 
