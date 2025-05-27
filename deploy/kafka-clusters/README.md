@@ -1,10 +1,6 @@
-# Kafka Cluster Examples
+# Kafka Cluster examples
 
-This folder references the official Kafka cluster examples provided by the Strimzi project. These examples demonstrate how to deploy Kafka clusters with different configurations.
-
-## Official Examples
-
-The official examples are available in the Strimzi GitHub repository. Below is a summary of each example:
+Some Kafka Cluster example manifests are available in the Strimzi GitHub repository. Below is a summary of each example:
 
 1. **[Kafka Ephemeral Cluster](https://github.com/strimzi/strimzi-kafka-operator/blob/main/examples/kafka/kafka-ephemeral.yaml)**  
    Deploys a Kafka cluster with ephemeral storage. This is suitable for development and testing environments where data persistence is not required.
