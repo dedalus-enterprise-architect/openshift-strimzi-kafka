@@ -42,7 +42,7 @@ kafka/
 ├── scripts/                   # Installation and cleanup scripts
 │   ├── install.sh             # Script for automated installation
 │   ├── uninstall.sh           # Script for automated uninstallation
-│   └── INSTALL.md             # Documentation for the install script
+│   └── README.md             # Documentation for the install script
 ```
 
 ## Concepts
