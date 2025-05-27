@@ -81,6 +81,7 @@ A cluster administrator can assign these roles to non-cluster administrators aft
     - Local clone of this repo
   - On OpenShift
     - Cluster admin privileges
+    - Access to ```quay.io``` registry
 
 ## Strimzi Kafka Operator deployment
 
@@ -93,40 +94,24 @@ A cluster administrator can assign these roles to non-cluster administrators aft
    ```
 
 2. **Deploy the Strimzi Kafka Operator**
-   - For namespace-scoped operator:
-     ```bash
-     helm install strimzi-kafka-operator strimzi/strimzi-kafka-operator \
-       --namespace kafka-operator \
-       --values deploy/strimzi-values/openshift-dev.yaml \
-       --set watchNamespaces="{kafka-operator}"
-     ```
-   - For cluster-wide operator:
-     ```bash
-     helm install strimzi-kafka-operator strimzi/strimzi-kafka-operator \
-       --namespace kafka-operator \
-       --values deploy/strimzi-values/openshift-prod.yaml \
-       --set watchNamespaces="{}"
-     ```
+
+   ```bash
+   NAMESPACE=kafka-operator
+   helm install strimzi-kafka-operator strimzi/strimzi-kafka-operator \
+     --namespace $NAMESPACE \
+     --values deploy/strimzi-values/openshift-dev-example.yaml
 
 3. **Verify the Deployment**
    ```bash
-   helm status strimzi-kafka-operator -n kafka-operator
-   oc get pods -n kafka-operator
+   NAMESPACE=kafka-operator
+   helm status strimzi-kafka-operator -n $NAMESPACE
+   oc get pods -n $NAMESPACE
    ```
 
 ### Automated
 
-The deployment process can be automated using the provided script. For additional details, please refer to the [script README](./scripts/README.md).
-
-1. **Run the Script**
-    - For namespace-scoped deployment:
-      ```bash
-      ./scripts/install.sh --namespace kafka-operator --version 0.33.0
-      ```
-    - For cluster-wide deployment with production values:
-      ```bash
-      ./scripts/install.sh --cluster-wide --prod --version 0.33.0
-      ```
+The deployment process can be automated using the provided script.
+For additional details, please refer to the [script README](./scripts/README.md).
 
 ## Kafka Cluster
 
@@ -140,12 +125,14 @@ You can uninstall the Strimzi Kafka Operator and related resources either manual
 
 1. **Delete Kafka Custom Resources**
    ```bash
-   oc delete kafka --all -n kafka-operator
+   NAMESPACE=kafka-operator
+   oc delete kafka --all -n $NAMESPACE
    ```
 
 2. **Uninstall the Helm Release**
    ```bash
-   helm uninstall strimzi-kafka-operator -n kafka-operator
+   NAMESPACE=kafka-operator
+   helm uninstall strimzi-kafka-operator -n $NAMESPACE
    ```
 
 3. **Delete Custom Resource Definitions (CRDs)**
@@ -155,22 +142,11 @@ You can uninstall the Strimzi Kafka Operator and related resources either manual
 
 4. **Delete the Namespace (Optional)**
    ```bash
-   oc delete namespace kafka-operator
+   NAMESPACE=kafka-operator
+   oc delete namespace $NAMESPACE
    ```
 
 ### Automated
 
 Use the provided `uninstall.sh` script to automate the uninstallation process.
-
-1. **Run the Script**
-   ```bash
-   ./scripts/uninstall.sh --namespace kafka-operator
-   ```
-
-2. **Verify Uninstallation**
-   Ensure all resources have been removed:
-   ```bash
-   oc get all -n kafka-operator
-   ```
-
-
+For additional details, please refer to the [script README](./scripts/README.md).
