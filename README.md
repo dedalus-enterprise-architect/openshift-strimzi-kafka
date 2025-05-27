@@ -34,9 +34,6 @@ kafka/
 │   ├── strimzi-values/        # Helm values files for different environments
 │   │   ├── openshift-dev-example.yaml
 │   │   └── openshift-prod-example.yaml
-│   ├── kafka-clusters/        # Kafka cluster definition files
-│   │   ├── dev-cluster.yaml
-│   │   └── prod-cluster.yaml
 │   └── kafka-clusters/        # Additional Kafka cluster deployment examples
 │       └── README.md          # Documentation for Kafka cluster deployment
 ├── scripts/                   # Installation and cleanup scripts
