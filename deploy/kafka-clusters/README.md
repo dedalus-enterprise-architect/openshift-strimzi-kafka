@@ -70,7 +70,43 @@ You can modify the example YAML files to:
 - Change the number of Kafka or ZooKeeper replicas.
 - Adjust resource requests and limits.
 - Enable external access using LoadBalancer or NodePort.
-- Configure storage (ephemeral or persistent).
 - Enable additional features like metrics or authorization.
+- Configure storage (ephemeral or persistent). See [Storage considerations](#storage-considerations) for details.
 
-For more details, refer to the [Strimzi Documentation](https://strimzi.io/docs/).
+## Storage considerations
+
+When deploying Kafka clusters in KRaft (Kafka Raft) mode, storage configuration is especially important because both Kafka data and metadata are stored on disk by each broker. In KRaft mode:
+- **No ZooKeeper**: All metadata previously managed by ZooKeeper is now managed by Kafka itself and stored locally on the brokers.
+- **Storage Requirements**: Each broker must have persistent storage for both logs and metadata. Using ephemeral storage is not recommended for production, as data loss can lead to loss of cluster metadata and messages.
+- **State Recovery**: If a broker loses its storage, it will lose both its data and metadata, which can impact the entire cluster's integrity.
+
+### Storage Types Summary
+
+- **Ephemeral**: Temporary, pod-local storage.
+```yaml
+# Using emptyDir (ephemeral):
+volumes:
+  - name: kafka-logs
+    emptyDir: {}
+```
+
+- **Persistent**: Durable storage via PVC.
+```yaml
+# Using a persistentVolumeClaim:
+volumes:
+  - name: kafka-logs
+    persistentVolumeClaim:
+      claimName: kafka-logs-pvc
+```
+
+- **JBOD**: Multiple disks for load distribution.
+```yaml
+# Multiple PVCs for JBOD:
+volumes:
+  - name: kafka-disk-0
+    persistentVolumeClaim:
+      claimName: kafka-disk-0-pvc
+  - name: kafka-disk-1
+    persistentVolumeClaim:
+      claimName: kafka-disk-1-pvc
+```
