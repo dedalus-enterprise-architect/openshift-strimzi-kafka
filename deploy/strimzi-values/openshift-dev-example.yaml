@@ -1,0 +1,22 @@
+# Namespace configuration
+watchNamespaces: ["strimzi-lab"]
+
+# OpenShift security context
+podSecurityContext:
+  fsGroup: null
+containerSecurityContext:
+  allowPrivilegeEscalation: false
+  capabilities:
+    drop: ["ALL"]
+
+# Resource limits for development
+resources:
+  requests:
+    cpu: 100m
+    memory: 256Mi
+  limits:
+    cpu: 500m
+    memory: 512Mi
+
+# Development-specific settings
+logLevel: DEBUG

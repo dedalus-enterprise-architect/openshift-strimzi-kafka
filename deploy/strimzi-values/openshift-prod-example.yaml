@@ -1,0 +1,39 @@
+# Namespace configuration
+watchAnyNamespace: true
+
+# Security context settings
+podSecurityContext:
+  fsGroup: null
+containerSecurityContext:
+  allowPrivilegeEscalation: false
+  capabilities:
+    drop: ["ALL"]
+  readOnlyRootFilesystem: true
+  runAsNonRoot: true
+
+# Production resource requirements
+resources:
+  requests:
+    cpu: 500m
+    memory: 512Mi
+  limits:
+    cpu: 1000m
+    memory: 1Gi
+
+# High availability settings
+affinity:
+  podAntiAffinity:
+    preferredDuringSchedulingIgnoredDuringExecution:
+      - weight: 100
+        podAffinityTerm:
+          labelSelector:
+            matchExpressions:
+              - key: app.kubernetes.io/name
+                operator: In
+                values:
+                  - strimzi-cluster-operator
+          topologyKey: "kubernetes.io/hostname"
+
+# Production-specific settings
+logLevel: INFO
+logFormat: json
